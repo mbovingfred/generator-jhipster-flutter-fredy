@@ -43,7 +43,7 @@
     ],
     "blueprints": []
   },
-  "generator-jhipster-flutter-merlin": {
+  "generator-jhipster-flutter-fredy": {
     "promptValues": {
       "baseName": "employeeMobile",
       "packageName": "com.employee.app",

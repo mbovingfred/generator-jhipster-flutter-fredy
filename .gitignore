@@ -13,3 +13,4 @@ test/temp/
 yarn.lock
 .DS_Store
 test/templates/**/lib
+.history

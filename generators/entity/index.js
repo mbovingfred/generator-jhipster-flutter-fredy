@@ -113,11 +113,11 @@ module.exports = class extends BaseGenerator {
 
                 const rawdata = fs.readFileSync(path.normalize(`${context.backendPath}/.yo-rc.json`));
                 const yoRC = JSON.parse(rawdata);
-                this.context.baseName = yoRC['generator-jhipster'].promptValues.baseName;
+                this.context.baseName = yoRC['generator-jhipster'].baseName;
                 this.context.camelizedBaseName = _.camelCase(this.context.baseName);
                 this.context.camelizedUpperFirstBaseName = _.upperFirst(this.context.camelizedBaseName);
-                this.context.packageName = yoRC['generator-jhipster'].promptValues.packageName;
-                this.context.enableTranslation = yoRC['generator-jhipster'].promptValues.enableTranslation;
+                this.context.packageName = yoRC['generator-jhipster'].packageName;
+                this.context.enableTranslation = yoRC['generator-jhipster'].enableTranslation;
 
                 if (context.backendPath) {
                     this.log(chalk.green('\nFound the entity folder configuration file, entity can be automatically generated!\n'));
@@ -669,7 +669,7 @@ module.exports = class extends BaseGenerator {
 
             utils.rewriteFile({
                 file: appClassPath,
-                needle: 'jhipster-merlin-needle-import-add',
+                needle: 'jhipster-fredy-needle-import-add',
                 splicable: [
                     this.stripMargin(routeImport)
                 ]
@@ -678,7 +678,7 @@ module.exports = class extends BaseGenerator {
             const addRoute = `...${entityClass}Routes.map,`;
             utils.rewriteFile({
                 file: appClassPath,
-                needle: 'jhipster-merlin-needle-route-add',
+                needle: 'jhipster-fredy-needle-route-add',
                 splicable: [
                     this.stripMargin(addRoute)
                 ]
@@ -692,7 +692,7 @@ module.exports = class extends BaseGenerator {
             ),`;
             utils.rewriteFile({
                 file: drawerClassPath,
-                needle: 'jhipster-merlin-needle-menu-entry-add',
+                needle: 'jhipster-fredy-needle-menu-entry-add',
                 splicable: [
                     this.stripMargin(newMenuEntry)
                 ]
@@ -701,7 +701,7 @@ module.exports = class extends BaseGenerator {
             const newMenuImportEntry = `import 'package:${baseName}/entities/${entityFileName}/${entityFileName}_route.dart';`;
             utils.rewriteFile({
                 file: drawerClassPath,
-                needle: 'jhipster-merlin-needle-menu-import-entry-add',
+                needle: 'jhipster-fredy-needle-menu-import-entry-add',
                 splicable: [
                     this.stripMargin(newMenuImportEntry)
                 ]
