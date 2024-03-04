@@ -79,4 +79,7 @@ class <%= entityClass %>State extends Equatable with FormzMixin {
 
   @override
   bool get stringify => true;
+
+  @override
+  List<FormzInput> get inputs => [<%_ fields.forEach(field => { _%><%= field.fieldName %>%>,<%_ }); _%>];
 }
