@@ -45,17 +45,34 @@ class <%= entityClass %> {
     <%_ }); _%>
     );
 
+
+
+<%= entityClass %>.fromJson(Map<String, dynamic> json)
+    : <%= idField.fieldName _%> = json['<%= idField.fieldName _%>']
+        <%_ fields.forEach(field => { _%>,
+        <%= field.fieldName _%> = json['<%= field.fieldName _%>']
+        <%_ }); _%>;
+
+Map<String, dynamic> toJson() => {
+    '<%= idField.fieldName _%>': <%= idField.fieldName _%>
+    <%_ fields.forEach(field => { _%>,
+    '<%= field.fieldName _%>': <%= field.fieldName _%>
+    <%_ }); _%>;
+};
+
 @override
 String toString() {
-    return '<%= entityClass %>{'+
-    '<%= idField.fieldName _%>: $<%= idField.fieldName _%>,' +
-    <%_ fields.forEach(field => { _%>
-        '<%= field.fieldName _%>: $<%= field.fieldName _%>,' +
-        <%_ }); _%>
+    String out = '{';
+    out += '"<%= idField.fieldName _%>": ${<%= idField.fieldName _%> != null ? <%= idField.fieldName _%> : null}';
+    out+= 
+    <%_ fields.forEach(field => { _%>,
+    '"<%= field.fieldName _%>": "$<%= field.fieldName _%>"' +
+        <%_ }); _%>;
     <%_ relationships.forEach(relationship => { _%>
-        '<%= relationship.relationshipFieldName _%>: $<%= relationship.relationshipFieldName _%>,' +
+        if (<%= relationship.relationshipFieldName _%> != null) out += ',"<%= relationship.relationshipFieldName _%>": $<%= relationship.relationshipFieldName _%>';
     <%_ }); _%>
-    '}';
+    out += '}';
+    return out;
    }
 
 @override

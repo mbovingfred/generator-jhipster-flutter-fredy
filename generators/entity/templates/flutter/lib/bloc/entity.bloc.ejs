@@ -71,8 +71,8 @@ class <%= entityClass %>Bloc extends Bloc<<%= entityClass %>Event, <%= entityCla
   }
 
   Stream<<%= entityClass %>State> onSubmit() async* {
-    if (this.state.formStatus.isValidated) {
-      yield this.state.copyWith(formStatus: FormzStatus.submissionInProgress);
+    if (this.state.isValid) {
+      yield this.state.copyWith(formStatus: FormzSubmissionStatus.inProgress);
       try {
         <%= entityClass %>? result;
         if(this.state.editMode) {
@@ -100,14 +100,14 @@ class <%= entityClass %>Bloc extends Bloc<<%= entityClass %>Event, <%= entityCla
         }
 
         if (result == null) {
-          yield this.state.copyWith(formStatus: FormzStatus.submissionFailure,
+          yield this.state.copyWith(formStatus: FormzSubmissionStatus.failure,
               generalNotificationKey: HttpUtils.badRequestServerKey);
         } else {
-          yield this.state.copyWith(formStatus: FormzStatus.submissionSuccess,
+          yield this.state.copyWith(formStatus: FormzSubmissionStatus.success,
               generalNotificationKey: HttpUtils.successResult);
         }
       } catch (e) {
-        yield this.state.copyWith(formStatus: FormzStatus.submissionFailure,
+        yield this.state.copyWith(formStatus: FormzSubmissionStatus.failure,
             generalNotificationKey: HttpUtils.errorServerKey);
       }
     }
@@ -166,15 +166,6 @@ class <%= entityClass %>Bloc extends Bloc<<%= entityClass %>Event, <%= entityCla
     final <%= field.fieldName %> = <%= field.fieldNameCapitalized %>Input.dirty(event.<%= field.fieldName %>);
     yield this.state.copyWith(
       <%= field.fieldName %>: <%= field.fieldName %>,
-      formStatus: Formz.validate([
-      <%_ fields.forEach(fieldValidation => { _%>
-        <%_ if(field.fieldName === fieldValidation.fieldName) { _%>
-        <%= field.fieldName %>,
-        <%_ } else { _%>
-      this.state.<%= fieldValidation.fieldName %>,
-      <%_ } _%>
-      <%_ }); _%>
-      ]),
     );
   }
 <%_ }); _%>

@@ -9,7 +9,7 @@ class SettingsState extends Equatable {
   <%_ if (enableTranslation) { _%>
   final String language;
   <%_ } _%>
-  final FormzStatus formStatus;
+  final FormzSubmissionStatus formStatus;
   final SettingsAction action;
   final String generalNotificationKey;
   final User currentUser;
@@ -22,7 +22,7 @@ class SettingsState extends Equatable {
     this.language = 'en',
     <%_ } _%>
     this.action = SettingsAction.none,
-    this.formStatus = FormzStatus.pure,
+    this.formStatus = FormzSubmissionStatus.initial,
     this.generalNotificationKey = HttpUtils.generalNoErrorKey,
     this.currentUser = const User('', '', '', '', '', '')
   });
@@ -34,7 +34,7 @@ class SettingsState extends Equatable {
     <%_ if (enableTranslation) { _%>
     String? language,
     <%_ } _%>
-    FormzStatus? status,
+    FormzSubmissionStatus? status,
     String? generalNotificationKey,
     SettingsAction? action,
     User? currentUser

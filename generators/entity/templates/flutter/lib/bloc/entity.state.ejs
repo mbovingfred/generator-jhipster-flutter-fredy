@@ -18,14 +18,14 @@ part of '<%= entityFileName %>_bloc.dart';
 enum <%= entityClass %>StatusUI {init, loading, error, done}
 enum <%= entityClass %>DeleteStatus {ok, ko, none}
 
-class <%= entityClass %>State extends Equatable {
+class <%= entityClass %>State extends Equatable with FormzMixin {
   final List<<%= entityClass %>> <%= entityClassPluralLowered %>;
   final <%= entityClass %> loaded<%= entityClass %>;
   final bool editMode;
   final <%= entityClass %>DeleteStatus deleteStatus;
   final <%= entityClass %>StatusUI <%= entityInstance %>StatusUI;
 
-  final FormzStatus formStatus;
+  final FormzSubmissionStatus formStatus;
   final String generalNotificationKey;
 
   <%_ fields.forEach(field => { _%>
@@ -38,7 +38,7 @@ class <%= entityClass %>State extends Equatable {
     this.<%= entityInstance %>StatusUI = <%= entityClass %>StatusUI.init,
     this.loaded<%= entityClass %> = const <%= entityClass %>(<%- idField.defaultValue %>, <%_ fields.forEach(field => { _%> <%- field.defaultValue %>, <%_ }); _%><%_ relationships.forEach(relationship => { _%> null, <%_ }); _%>),
     this.editMode = false,
-    this.formStatus = FormzStatus.pure,
+    this.formStatus = FormzSubmissionStatus.initial,
     this.generalNotificationKey = '',
     this.deleteStatus = <%= entityClass %>DeleteStatus.none,
     <%_ fields.forEach(field => { _%>
@@ -52,7 +52,7 @@ class <%= entityClass %>State extends Equatable {
     bool? editMode,
     <%= entityClass %>DeleteStatus? deleteStatus,
     <%= entityClass %>? loaded<%= entityClass %>,
-    FormzStatus? formStatus,
+    FormzSubmissionStatus? formStatus,
     String? generalNotificationKey,
     <%_ fields.forEach(field => { _%>
     <%= field.fieldNameCapitalized %>Input? <%= field.fieldName %>,

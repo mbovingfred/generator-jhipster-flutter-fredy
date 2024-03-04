@@ -54,7 +54,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
 
   Stream<SettingsState> onSubmit() async* {
     if (state.formStatus.isValidated) {
-      yield state.copyWith(status: FormzStatus.submissionInProgress);
+      yield state.copyWith(status: FormzSubmissionStatus.inProgress);
       SettingsAction action = SettingsAction.none;
       try {
         <%_ if (enableTranslation) { _%>
@@ -70,15 +70,15 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         String? result = await _accountRepository.saveAccount(newCurrentUser);
 
         if (result != null && result.compareTo(HttpUtils.successResult) != 0) {
-          yield state.copyWith(status: FormzStatus.submissionFailure,
+          yield state.copyWith(status: FormzSubmissionStatus.failure,
               generalNotificationKey: result);
         } else {
           yield state.copyWith(currentUser: newCurrentUser,
-              status: FormzStatus.submissionSuccess, action: action
+              status: FormzSubmissionStatus.success, action: action
           , generalNotificationKey: successKey);
         }
       } catch (e) {
-        yield state.copyWith(status: FormzStatus.submissionFailure,
+        yield state.copyWith(status: FormzSubmissionStatus.failure,
             generalNotificationKey: HttpUtils.errorServerKey);
       }
     }

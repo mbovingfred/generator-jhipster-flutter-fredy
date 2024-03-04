@@ -3,7 +3,7 @@ part of 'login_bloc.dart';
 class LoginState extends Equatable {
   final LoginInput login;
   final PasswordInput password;
-  final FormzStatus status;
+  final FormzSubmissionStatus status;
   final String generalErrorKey;
 
   static final String authenticationFailKey = 'error.authenticate';
@@ -11,14 +11,14 @@ class LoginState extends Equatable {
   const LoginState({
     this.login = const LoginInput.pure(),
     this.password = const PasswordInput.pure(),
-    this.status = FormzStatus.pure,
+    this.status = FormzSubmissionStatus.initial,
     this.generalErrorKey = HttpUtils.generalNoErrorKey
   });
 
   LoginState copyWith({
     LoginInput? login,
     PasswordInput? password,
-    FormzStatus? status,
+    FormzSubmissionStatus? status,
     String? generalErrorKey
   }) {
     return LoginState(

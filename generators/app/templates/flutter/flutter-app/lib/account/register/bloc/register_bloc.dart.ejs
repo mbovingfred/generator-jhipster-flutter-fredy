@@ -44,17 +44,17 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   Stream<RegisterState> onSubmit() async* {
     if (state.status.isValidated) {
-      yield state.copyWith(status: FormzStatus.submissionInProgress);
+      yield state.copyWith(status: FormzSubmissionStatus.inProgress);
       User newUser = new User(state.login.value, state.email.value, state.password.value, 'en', null, null);
       try {
         String? result = await _accountRepository.register(newUser);
         if (result != null && result.compareTo(HttpUtils.successResult) != 0) {
-          yield state.copyWith(status: FormzStatus.submissionFailure, generalErrorKey: result);
+          yield state.copyWith(status: FormzSubmissionStatus.failure, generalErrorKey: result);
         } else {
-          yield state.copyWith(status: FormzStatus.submissionSuccess);
+          yield state.copyWith(status: FormzSubmissionStatus.success);
         }
       } catch (e) {
-        yield state.copyWith(status: FormzStatus.submissionFailure,
+        yield state.copyWith(status: FormzSubmissionStatus.failure,
             generalErrorKey: HttpUtils.errorServerKey);
       }
     }
@@ -80,7 +80,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     } else {
       yield state.copyWith(
           confirmPassword: confirmPassword,
-          status: FormzStatus.invalid, generalErrorKey: passwordNotIdenticalKey
+          status: FormzSubmissionStatus.invalid, generalErrorKey: passwordNotIdenticalKey
       );
     }
   }

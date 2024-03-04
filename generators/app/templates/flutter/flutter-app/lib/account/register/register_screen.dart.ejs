@@ -51,7 +51,7 @@ class RegisterScreen extends StatelessWidget {
         buildWhen: (previous, current) => previous.status != current.status,
         builder: (context, state) {
           return Visibility(
-            visible: !state.status.isSubmissionSuccess,
+            visible: !state.status.issuccess,
             child: Form(
               child: Wrap(runSpacing: 15, children: <Widget>[
                 loginField(),
@@ -165,7 +165,7 @@ class RegisterScreen extends StatelessWidget {
             || previous.generalErrorKey != current.generalErrorKey,
         builder: (context, state) {
           return Visibility(
-              visible: state.status.isSubmissionFailure || state.status.isInvalid && state.generalErrorKey != HttpUtils.generalNoErrorKey,
+              visible: state.status.isfailure || state.status.isInvalid && state.generalErrorKey != HttpUtils.generalNoErrorKey,
               child: Center(
                 child: Text(
                   generateError(state, context),
@@ -202,7 +202,7 @@ class RegisterScreen extends StatelessWidget {
                 child:  Center(
                   child: Visibility(
                     replacement: CircularProgressIndicator(value: null),
-                    visible: !state.status.isSubmissionInProgress,
+                    visible: !state.status.isinProgress,
                     child: Text(<%_ if (enableTranslation) { _%> S.of(context).pageRegisterFormSubmit.toUpperCase() <%_ } else { _%> 'Sign up' <%_ } _%>,
                     ),
                   ),
@@ -217,7 +217,7 @@ class RegisterScreen extends StatelessWidget {
         buildWhen: (previous, current) => previous.status != current.status,
         builder: (context, state) {
           return Visibility(
-            visible: state.status.isSubmissionSuccess,
+            visible: state.status.issuccess,
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

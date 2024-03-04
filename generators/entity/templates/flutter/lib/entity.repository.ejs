@@ -20,22 +20,24 @@ class <%= entityClass %>Repository {
 
   Future<List<<%= entityClass %>>> getAll<%= entityClassPlural %>() async {
     final all<%= entityClassPlural %>Request = await HttpUtils.getRequest(uriEndpoint);
-    return JsonMapper.deserialize<List<<%= entityClass %>>>(all<%= entityClassPlural %>Request.body);
+    Iterable l = json.decode(all<%= entityClassPlural %>Request.body);
+    List<<%= entityClassPlural %>> <%= entityInstancePlural %> = List<<%= entityClassPlural %>>.from(l.map((model)=> <%= entityClassPlural %>.fromJson(model)));
+    return <%= entityInstancePlural %>;
   }
 
   Future<<%= entityClass %>> get<%= entityClass %>(int? id) async {
     final <%= entityInstance %>Request = await HttpUtils.getRequest('$uriEndpoint/$id');
-    return JsonMapper.deserialize<<%= entityClass %>>(<%= entityInstance %>Request.body);
+    return <%= entityClass %>.fromJson(json.decode(<%= entityInstance %>Request.body));
   }
 
   Future<<%= entityClass %>> create(<%= entityClass %> <%= entityInstance %>) async {
-    final <%= entityInstance %>Request = await HttpUtils.postRequest('$uriEndpoint', <%= entityInstance %>);
-    return JsonMapper.deserialize<<%= entityClass %>>(<%= entityInstance %>Request.body);
+    final <%= entityInstance %>Request = await HttpUtils.postRequest('$uriEndpoint', <%= entityInstance %>.toString());
+    return <%= entityClass %>.fromJson(json.decode(<%= entityInstance %>Request.body));
   }
 
   Future<<%= entityClass %>> update(<%= entityClass %> <%= entityInstance %>) async {
-    final <%= entityInstance %>Request = await HttpUtils.putRequest('$uriEndpoint', <%= entityInstance %>);
-    return JsonMapper.deserialize<<%= entityClass %>>(<%= entityInstance %>Request.body);
+    final <%= entityInstance %>Request = await HttpUtils.putRequest('$uriEndpoint', <%= entityInstance %>.toString(), <%= entityInstance %>.id!);
+    return <%= entityClass %>.fromJson(json.decode(<%= entityInstance %>Request.body));
   }
 
   Future<void> delete(int id) async {

@@ -20,7 +20,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        if(state.status.isSubmissionSuccess){
+        if(state.status.issuccess){
           Navigator.pushNamed(context, <%= camelizedUpperFirstBaseName %>Routes.main);
         }
       },
@@ -112,7 +112,7 @@ class LoginScreen extends StatelessWidget {
         buildWhen:(previous, current) => previous.status != current.status,
         builder: (context, state) {
           return Visibility(
-              visible: state.status.isSubmissionFailure,
+              visible: state.status.isfailure,
               child: Center(
                 child: Text(
                   generateError(state, context),
@@ -134,7 +134,7 @@ class LoginScreen extends StatelessWidget {
                 child: Center(
                         child: Visibility(
                           replacement: CircularProgressIndicator(value: null),
-                          visible: !state.status.isSubmissionInProgress,
+                          visible: !state.status.isinProgress,
                     child: Text(<%_ if (enableTranslation) { _%>S.of(context).pageLoginLoginButton.toUpperCase()<%_ } else { _%>'Sign in'.toUpperCase()<%_ } _%>),
                         ),
                       )

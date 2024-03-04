@@ -35,7 +35,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   Stream<LoginState> onSubmit() async* {
     if (state.status.isValidated) {
-      yield state.copyWith(status: FormzStatus.submissionInProgress);
+      yield state.copyWith(status: FormzSubmissionStatus.inProgress);
       UserJWT userJWT = UserJWT(state.login.value, state.password.value);
       try {
         var token = await _loginRepository.authenticate(userJWT);
@@ -43,13 +43,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           FlutterSecureStorage storage = new FlutterSecureStorage();
           await storage.delete(key: HttpUtils.keyForJWTToken);
           await storage.write(key: HttpUtils.keyForJWTToken, value: token.idToken);
-          yield state.copyWith(status: FormzStatus.submissionSuccess);
+          yield state.copyWith(status: FormzSubmissionStatus.success);
         } else {
-          yield state.copyWith(status: FormzStatus.submissionFailure,
+          yield state.copyWith(status: FormzSubmissionStatus.failure,
               generalErrorKey: LoginState.authenticationFailKey);
         }
       } catch (e) {
-        yield state.copyWith(status: FormzStatus.submissionFailure,
+        yield state.copyWith(status: FormzSubmissionStatus.failure,
             generalErrorKey: HttpUtils.errorServerKey);
       }
     }

@@ -37,7 +37,7 @@ class <%= entityClass %>UpdateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<<%= entityClass %>Bloc, <%= entityClass %>State>(
       listener: (context, state) {
-        if(state.formStatus.isSubmissionSuccess){
+        if(state.formStatus.issuccess){
           Navigator.pushNamed(context, <%= entityClass %>Routes.list);
         }
       },
@@ -176,7 +176,7 @@ class <%= entityClass %>UpdateScreen extends StatelessWidget {
         buildWhen:(previous, current) => previous.formStatus != current.formStatus,
         builder: (context, state) {
           return Visibility(
-              visible: state.formStatus.isSubmissionFailure ||  state.formStatus.isSubmissionSuccess,
+              visible: state.formStatus.isfailure ||  state.formStatus.issuccess,
               child: Center(
                 child: generateNotificationText(state, context),
               ));
@@ -210,13 +210,13 @@ class <%= entityClass %>UpdateScreen extends StatelessWidget {
           String buttonLabel = state.editMode == true ?
           <%_ if(enableTranslation) { _%>S.of(context).entityActionEdit.toUpperCase()<%_ } else { _%>'Edit'<%_ } _%> :
           <%_ if(enableTranslation) { _%>S.of(context).entityActionCreate.toUpperCase()<%_ } else { _%>'Create'<%_ } _%>;
-          return RaisedButton(
+          return ElevatedButton(
             child: Container(
                 width: MediaQuery.of(context).size.width,
                 child: Center(
                   child: Visibility(
                     replacement: CircularProgressIndicator(value: null),
-                    visible: !state.formStatus.isSubmissionInProgress,
+                    visible: !state.formStatus.isinProgress,
                     child: Text(buttonLabel),
                   ),
                 )),
