@@ -10,6 +10,7 @@ const entityClassCamelCase = context.entityClassCamelCase;
 const entityClassKebabCase = context.entityClassKebabCase;
 const entityClassKebabCasePlural = context.entityClassKebabCasePlural;
 _%>
+import 'dart:convert';
 import 'package:<%= baseName %>/entities/<%= entityFileName %>/<%= entityFileName %>_model.dart';
 import 'package:<%= baseName %>/shared/repository/http_utils.dart';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
