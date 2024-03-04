@@ -141,7 +141,7 @@ class SettingsScreen extends StatelessWidget {
               child: Center(
                 child: Visibility(
                   replacement: CircularProgressIndicator(value: null),
-                  visible: !state.formStatus.isinProgress,
+                  visible: !state.formStatus.isInProgress,
                   child: Text(<%_ if (enableTranslation) { _%> S.of(context).pageSettingsFormSave.toUpperCase() <%_ } else { _%> 'SAVE' <%_ } _%>),
                 ),
               )),

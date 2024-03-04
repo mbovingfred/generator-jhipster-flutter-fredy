@@ -216,7 +216,7 @@ class <%= entityClass %>UpdateScreen extends StatelessWidget {
                 child: Center(
                   child: Visibility(
                     replacement: CircularProgressIndicator(value: null),
-                    visible: !state.formStatus.isinProgress,
+                    visible: !state.formStatus.isInProgress,
                     child: Text(buttonLabel),
                   ),
                 )),

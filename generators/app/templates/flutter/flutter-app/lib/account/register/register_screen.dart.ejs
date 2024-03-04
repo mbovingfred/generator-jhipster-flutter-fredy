@@ -202,7 +202,7 @@ class RegisterScreen extends StatelessWidget {
                 child:  Center(
                   child: Visibility(
                     replacement: CircularProgressIndicator(value: null),
-                    visible: !state.status.isinProgress,
+                    visible: !state.status.isInProgress,
                     child: Text(<%_ if (enableTranslation) { _%> S.of(context).pageRegisterFormSubmit.toUpperCase() <%_ } else { _%> 'Sign up' <%_ } _%>,
                     ),
                   ),
