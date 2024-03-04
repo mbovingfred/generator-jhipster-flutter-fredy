@@ -22,7 +22,7 @@ class <%= entityClass %>Repository {
   Future<List<<%= entityClass %>>> getAll<%= entityClassPlural %>() async {
     final all<%= entityClassPlural %>Request = await HttpUtils.getRequest(uriEndpoint);
     Iterable l = json.decode(all<%= entityClassPlural %>Request.body);
-    List<<%= entityClassPlural %>> <%= entityInstancePlural %> = List<<%= entityClassPlural %>>.from(l.map((model)=> <%= entityClassPlural %>.fromJson(model)));
+    List<<%= entityClass %>> <%= entityInstancePlural %> = List<<%= entityClassPlural %>>.from(l.map((model)=> <%= entityClassPlural %>.fromJson(model)));
     return <%= entityInstancePlural %>;
   }
 
